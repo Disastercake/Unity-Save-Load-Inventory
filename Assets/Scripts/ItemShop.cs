@@ -6,10 +6,14 @@ using UnityEngine;
 public class ItemShop : MonoBehaviour
 {
     [SerializeField]
-    private ListItemButton _listItemPrefab = null;
+    private ItemScrollView _ItemScrollView = null;
 
-    private void Start()
+    private List<ItemData> _itemList = null;
+
+    public void SetList(List<ItemData> itemList)
     {
+        _itemList = itemList;
 
+        _ItemScrollView.SetList(_itemList);
     }
 }
