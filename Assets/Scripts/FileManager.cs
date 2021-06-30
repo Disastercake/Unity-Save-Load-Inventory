@@ -119,7 +119,7 @@ public static class FileManager
         {
             HandleDirectory();
 
-            string json = Newtonsoft.Json.JsonConvert.SerializeObject(saveData, Newtonsoft.Json.Formatting.None);
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(saveData, Newtonsoft.Json.Formatting.Indented);
 
             var path = SaveFilePath();
             UnityEngine.Debug.Log("Saving to: " + path);
@@ -146,7 +146,7 @@ public static class FileManager
         gameData = null;
         if (!SaveFileExists()) return false;
         
-        var settings = new Newtonsoft.Json.JsonSerializerSettings { TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All, Formatting = Newtonsoft.Json.Formatting.None };
+        var settings = new Newtonsoft.Json.JsonSerializerSettings { TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All, Formatting = Newtonsoft.Json.Formatting.Indented };
 
         var path = SaveFilePath();
         UnityEngine.Debug.Log("Loading from: " + path);
@@ -157,7 +157,7 @@ public static class FileManager
 
         gameData = Newtonsoft.Json.JsonConvert.DeserializeObject<GameSaveData>(loadedString, settings);
 
-        return gameData == null;
+        return gameData != null;
     }
 
     #endregion
