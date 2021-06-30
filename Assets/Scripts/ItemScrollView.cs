@@ -34,8 +34,7 @@ public class ItemScrollView : MonoBehaviour
             foreach (var item in _itemList)
             {
                 var b = GetButton();
-
-
+                b.SetItem(item);
             }
         }
     }
