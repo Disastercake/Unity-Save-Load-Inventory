@@ -11,7 +11,7 @@ public class GameSaveData
     public string PlayerName = string.Empty;
 
     [Newtonsoft.Json.JsonProperty]
-    public Dictionary<int, int> PlayerInventory = new Dictionary<int, int>();
+    public Dictionary<string, int> PlayerInventory = new Dictionary<string, int>();
 
     [Newtonsoft.Json.JsonProperty]
     public int PlayerGold = 0;
