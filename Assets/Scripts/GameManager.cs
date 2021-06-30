@@ -20,6 +20,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        ItemDatabase.LoadItemDatabase();
+    }
+
     public GameSaveData _GameSaveData { get; private set; } = null;
     public void SetGameSaveData(GameSaveData data)
     {
