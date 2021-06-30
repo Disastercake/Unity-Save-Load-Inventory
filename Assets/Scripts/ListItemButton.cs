@@ -11,10 +11,12 @@ public class ListItemButton : MonoBehaviour
     private TMPro.TextMeshProUGUI _descriptionComp = null;
 
     public ItemData _ItemData { get; private set; } = null;
+    public int Amount { get; private set; } = 1;
 
-    public void SetItem(ItemData item)
+    public void SetItem(ItemData item, int amount)
     {
         _ItemData = item;
+        Amount = amount;
 
         _nameComp.text = item != null ? item.Name : "EMPTY";
         _descriptionComp.text = item != null ? item.Description : "No description...";
