@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class ItemDatabase
 {
-    private Dictionary<string, ItemData> _database = new Dictionary<string, ItemData>();
+    private static Dictionary<string, ItemData> _database = new Dictionary<string, ItemData>();
 
     public static bool TryGet(string id, out ItemData item)
     {
