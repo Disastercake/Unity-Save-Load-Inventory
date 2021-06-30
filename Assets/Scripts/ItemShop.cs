@@ -10,6 +10,26 @@ public class ItemShop : MonoBehaviour
 
     private List<ItemData> _itemList = null;
 
+    private void OnEnable()
+    {
+        try { Messenger.AddListener(Messages.GameLoaded, OnGameLoad); } catch { }
+    }
+
+    private void OnDisable()
+    {
+        try { Messenger.RemoveListener(Messages.GameLoaded, OnGameLoad); } catch { }
+    }
+
+    private void OnDestroy()
+    {
+        try { Messenger.RemoveListener(Messages.GameLoaded, OnGameLoad); } catch { }
+    }
+
+    private void OnGameLoad()
+    {
+
+    }
+
     public void SetList(List<ItemData> itemList)
     {
         _itemList = itemList;
