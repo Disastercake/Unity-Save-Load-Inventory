@@ -11,10 +11,10 @@ public class ItemScrollView : MonoBehaviour
     [SerializeField]
     private Transform _contentParent = null;
 
-    private List<ItemData> _itemList = null;
+    private Dictionary<ItemData, int> _itemList = null;
     private List<ListItemButton> _buttonPool = new List<ListItemButton>();
 
-    public void SetList(List<ItemData> itemList)
+    public void SetList(Dictionary<ItemData, int> itemList)
     {
         _itemList = itemList;
         UpdateGui();
@@ -34,7 +34,7 @@ public class ItemScrollView : MonoBehaviour
             foreach (var item in _itemList)
             {
                 var b = GetButton();
-                b.SetItem(item);
+                b.SetItem(item.Key, item.Value);
             }
         }
     }
@@ -57,7 +57,7 @@ public class ItemScrollView : MonoBehaviour
     {
         foreach (var b in _buttonPool)
         {
-            b.SetItem(null);
+            b.SetItem(null, 0);
         }
     }
 }
