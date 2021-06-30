@@ -8,32 +8,37 @@ public class ItemShop : MonoBehaviour
     [SerializeField]
     private ItemScrollView _ItemScrollView = null;
 
-    private List<ItemData> _itemList = null;
+    private Dictionary<ItemData, int> _itemList = null;
 
     private void OnEnable()
     {
-        try { Messenger.AddListener(Messages.GameLoaded, OnGameLoad); } catch { }
+        try { Messenger.AddListener(Messages.ShopChanged, OnShopChange); } catch { }
     }
 
     private void OnDisable()
     {
-        try { Messenger.RemoveListener(Messages.GameLoaded, OnGameLoad); } catch { }
+        try { Messenger.RemoveListener(Messages.ShopChanged, OnShopChange); } catch { }
     }
 
     private void OnDestroy()
     {
-        try { Messenger.RemoveListener(Messages.GameLoaded, OnGameLoad); } catch { }
+        try { Messenger.RemoveListener(Messages.ShopChanged, OnShopChange); } catch { }
     }
 
-    private void OnGameLoad()
+    private void OnShopChange()
     {
+        var items = ItemDatabase.GetRandomItems(20);
+
 
     }
 
-    public void SetList(List<ItemData> itemList)
+    private void SetList(Dictionary<ItemData, int> itemList)
     {
         _itemList = itemList;
 
         _ItemScrollView.SetList(_itemList);
     }
+
+
+
 }
