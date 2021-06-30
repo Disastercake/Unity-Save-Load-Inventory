@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[Newtonsoft.Json.JsonObject]
 public class ItemData
 {
     public string Id { get; private set; } = string.Empty;
