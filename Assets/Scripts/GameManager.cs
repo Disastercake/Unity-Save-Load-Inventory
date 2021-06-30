@@ -18,14 +18,16 @@ public class GameManager : MonoBehaviour
             Debug.LogError("There was more than one GameManager component in the scene.  There can only be one!  Slaying the weakest now...");
             Destroy(this); // Only destroy component in case the GameObject it's attached to is important.
         }
+
+        InitializeCommands();
     }
 
-    private void Start()
+    private void InitializeCommands()
     {
         ItemDatabase.LoadItemDatabase();
     }
 
-    public GameSaveData _GameSaveData { get; private set; } = null;
+    public GameSaveData _GameSaveData { get; private set; } = new GameSaveData();
     public void SetGameSaveData(GameSaveData data)
     {
         _GameSaveData = null;
