@@ -10,17 +10,54 @@ public class ListItemButton : MonoBehaviour
     [SerializeField]
     private TMPro.TextMeshProUGUI _descriptionComp = null;
 
+    public delegate void OnClickHandler(ListItemButton button);
+    public OnClickHandler OnClick;
+
     public ItemData _ItemData { get; private set; } = null;
-    public int Amount { get; private set; } = 1;
+    public int Quantity { get; private set; } = 0;
+    public string Id { get; private set; } = string.Empty;
 
-    public void SetItem(ItemData item, int amount)
+    public void SetItem(string id, int quantity)
     {
-        _ItemData = item;
-        Amount = amount;
+        if (string.IsNullOrEmpty(id))
+        {
+            Reset();
+            return;
+        }
 
-        _nameComp.text = item != null ? item.Name : "EMPTY";
-        _descriptionComp.text = item != null ? item.Description : "No description...";
+        Id = id;
 
-        gameObject.SetActive(item != null);
+        ItemData itemdata = null;
+
+        if (ItemDatabase.TryGet(id, out itemdata))
+            _ItemData = itemdata;
+
+        if (itemdata != null)
+        {
+            Quantity = quantity;
+            _nameComp.text = string.Format("{0} x{1}", _ItemData.Name, quantity);
+            _descriptionComp.text = _ItemData.Description;
+        }
+        else
+        {
+            Reset();
+        }
+
+        gameObject.SetActive(_ItemData != null);
+    }
+
+    public void Reset()
+    {
+        Quantity = 0;
+        Id = string.Empty;
+        _ItemData = null;
+
+        _nameComp.text = "EMPTY";
+        _descriptionComp.text = "No item...";
+    }
+
+    public void _OnClick()
+    {
+        OnClick?.Invoke(this);
     }
 }
