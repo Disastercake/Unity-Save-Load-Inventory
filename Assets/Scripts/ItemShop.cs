@@ -8,7 +8,18 @@ public class ItemShop : MonoBehaviour
     [SerializeField]
     private ItemScrollView _ItemScrollView = null;
 
-    private Dictionary<ItemData, int> _itemList = null;
+    private ItemGroup _itemList = null;
+
+    private void Awake()
+    {
+        _ItemScrollView.OnButtonClick += new ItemScrollView.OnClickHandler(OnButtonClick);
+    }
+
+    private void OnButtonClick(ListItemButton button)
+    {
+        GameManager.PlayerInventory.Add(button.Id, 1);
+        _itemList.Remove(button.Id, 1);
+    }
 
     private void OnEnable()
     {
@@ -29,16 +40,13 @@ public class ItemShop : MonoBehaviour
     {
         var items = ItemDatabase.GetRandomItems(20);
 
-
+        SetList(items);
     }
 
-    private void SetList(Dictionary<ItemData, int> itemList)
+    private void SetList(ItemGroup itemList)
     {
         _itemList = itemList;
 
-        _ItemScrollView.SetList(_itemList);
+        _ItemScrollView.SetList(itemList);
     }
-
-
-
 }
