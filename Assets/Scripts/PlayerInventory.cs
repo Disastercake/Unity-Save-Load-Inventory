@@ -8,7 +8,12 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField]
     private ItemScrollView _ItemScrollView = null;
 
-    private List<ItemData> _itemList = null;
+    private ItemGroup _itemList = null;
+
+    private void Awake()
+    {
+        _ItemScrollView.OnButtonClick += new ItemScrollView.OnClickHandler(OnButtonClick);
+    }
 
     private void OnEnable()
     {
@@ -28,23 +33,22 @@ public class PlayerInventory : MonoBehaviour
         try { Messenger.RemoveListener(Messages.PlayerInventoryChanged, UpdatePlayerInventory); } catch { }
     }
 
-    private void UpdatePlayerInventory()
+    private void OnButtonClick(ListItemButton button)
     {
-        var inventory = GameManager.Instance._GameSaveData.PlayerInventory;
-
-        //for (int i = 0; i < length; i++)
-        //{
-
-        //}
+        GameManager.PlayerInventory.Remove(button.Id, 1);
     }
 
-    private void SetList(List<ItemData> itemList)
+    private void UpdatePlayerInventory()
+    {
+        var inventory = GameManager.Instance.GetGameSaveData().PlayerInventory;
+
+        SetList(inventory);
+    }
+
+    private void SetList(ItemGroup itemList)
     {
         _itemList = itemList;
 
-        //_ItemScrollView.SetList(_itemList);
+        _ItemScrollView.SetList(itemList);
     }
-
-
-
 }
