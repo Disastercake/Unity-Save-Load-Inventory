@@ -22,14 +22,39 @@ public class GameManager : MonoBehaviour
         InitializeCommands();
     }
 
+    private void Start()
+    {
+        try { Messenger.Broadcast(Messages.ShopChanged); } catch { }
+    }
+
     private void InitializeCommands()
     {
         ItemDatabase.LoadItemDatabase();
     }
 
-    public GameSaveData _GameSaveData { get; private set; } = new GameSaveData();
+    private GameSaveData _GameSaveData = new GameSaveData();
     public void SetGameSaveData(GameSaveData data)
     {
-        _GameSaveData = null;
+        _GameSaveData = data;
+    }
+
+    public GameSaveData GetGameSaveData()
+    {
+        return _GameSaveData;
+    }
+
+    public static class PlayerInventory
+    {
+        public static void Add(string id, int quantity)
+        {
+            Instance._GameSaveData.PlayerInventory.Add(id, quantity);
+            try { Messenger.Broadcast(Messages.PlayerInventoryChanged); } catch { }
+        }
+
+        public static void Remove(string id, int quantity)
+        {
+            Instance._GameSaveData.PlayerInventory.Remove(id, quantity);
+            try { Messenger.Broadcast(Messages.PlayerInventoryChanged); } catch { }
+        }
     }
 }

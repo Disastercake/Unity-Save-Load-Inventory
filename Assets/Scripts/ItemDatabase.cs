@@ -29,20 +29,16 @@ public static class ItemDatabase
         _database.Add(id, new ItemData(id, "Purple Potion", "A purple concotion with a bitter taste."));
     }
 
-    public static Dictionary<string, int> GetRandomItems(int num)
+    public static ItemGroup GetRandomItems(int num)
     {
-        Dictionary<string, int> items = new Dictionary<string, int>();
+        ItemGroup items = new ItemGroup();
 
         var keys = _database.Keys.ToArray();
 
         for (int i = 0; i < num; i++)
         {
-            var id = keys[Random.Range(0, keys.Length - 1)];
-
-            if (items.ContainsKey(id))
-                items[id] = items[id] + 1;
-            else
-                items.Add(id, 1);
+            var id = keys[Random.Range(0, keys.Length)];
+            items.Add(id, 1);
         }
 
         return items;
